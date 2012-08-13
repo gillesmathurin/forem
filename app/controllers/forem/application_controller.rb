@@ -1,6 +1,11 @@
 require 'cancan'
 
 class Forem::ApplicationController < ApplicationController
+  before_filter :set_locale
+
+  def set_locale
+    I18n.locale = params[:locale] || I18n.default_locale
+  end
 
   rescue_from CanCan::AccessDenied do
     redirect_to root_path, :alert => t("forem.access_denied")
